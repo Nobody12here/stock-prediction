@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Contact page content here -->
+<div class="contact-card">
+  <div style="font-size:2.5rem; color:#667eea; margin-bottom:10px;"><i class="fas fa-envelope-open-text"></i></div>
+  <h2>Contact Us</h2>
+  <p>If you have any questions, feedback, or need support, please reach out to us using the form below or email us at <a href="mailto:support@example.com">support@example.com</a>.</p>
+  <form>
+            <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" placeholder="Your Name">
+            </div>
+            <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" placeholder="Your Email">
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+      <textarea class="form-control" id="message" rows="4" placeholder="Your Message"></textarea>
+            </div>
+    <button type="submit" class="btn btn-primary mt-2">Send</button>
+          </form>
+        </div>
+{% endblock %}

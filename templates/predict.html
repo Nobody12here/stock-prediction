@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Main prediction page content (excluding header/nav) goes here -->
+<div class="container">
+    <!-- Prediction Highlight -->
+    <div class="prediction-highlight">
+        <div class="prediction-price">{{ prediction_stats.predicted_price }}</div>
+        <p>Predicted Price for Next Day</p>
+        <div class="prediction-stats">
+            <div class="prediction-stat">
+                <div class="prediction-stat-value">{{ prediction_stats.confidence_level }}%</div>
+                <div class="prediction-stat-label">Confidence Level</div>
+            </div>
+            <div class="prediction-stat">
+                <div class="prediction-stat-value">{{ prediction_stats.time_horizon }}</div>
+                <div class="prediction-stat-label">Time Horizon</div>
+            </div>
+            <div class="prediction-stat">
+                <div class="prediction-stat-value">{{ prediction_stats.historical_accuracy }}%</div>
+                <div class="prediction-stat-label">Historical Accuracy</div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <!-- Stock Information -->
+            <div class="card">
+                <h3><i class="fas fa-info-circle"></i> Stock Information</h3>
+                <div class="metric">
+                    <span class="metric-label">Current Price</span>
+                    <span class="metric-value">{{ stock_data.current_price }}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">52 Week High</span>
+                    <span class="metric-value">{{ stock_data.high_52w }}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">52 Week Low</span>
+                    <span class="metric-value">{{ stock_data.low_52w }}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Market Cap</span>
+                    <span class="metric-value">{{ stock_data.market_cap }}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">P/E Ratio</span>
+                    <span class="metric-value">{{ stock_data.pe_ratio }}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Dividend Yield</span>
+                    <span class="metric-value">{{ stock_data.dividend_yield }}</span>
+                </div>
+            </div>
+
+            <!-- Technical Indicators -->
+            <div class="card">
+                <h3><i class="fas fa-chart-bar"></i> Technical Indicators</h3>
+    {% for indicator in technical_indicators %}
+                <div class="metric">
+                    <span class="metric-label">{{ indicator.name }}</span>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span class="metric-value">{{ indicator.value }}</span>
+                        <span class="status-badge status-{{ indicator.status.lower() }}">{{ indicator.status }}</span>
+                    </div>
+                </div>
+    {% endfor %}
+                {% if not technical_indicators %}
+                <p style="color: #666; font-style: italic;">Insufficient data for technical indicators</p>
+                {% endif %}
+            </div>
+
+            <!-- Risk Metrics -->
+            <div class="card">
+                <h3><i class="fas fa-exclamation-triangle"></i> Risk Metrics</h3>
+    {% for risk in risk_metrics %}
+                <div class="metric">
+                    <span class="metric-label">{{ risk.name }}</span>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span class="metric-value">{{ risk.value }}</span>
+                        <span class="status-badge status-{{ risk.level.lower() }}">{{ risk.level }}</span>
+                    </div>
+                </div>
+    {% endfor %}
+                {% if not risk_metrics %}
+                <p style="color: #666; font-style: italic;">Insufficient data for risk metrics</p>
+                {% endif %}
+            </div>
+
+            <!-- Related Stocks -->
+            <div class="card">
+                <h3><i class="fas fa-link"></i> Related Stocks</h3>
+    {% for stock in related_stocks %}
+                <div class="metric">
+                    <span class="metric-label">{{ stock.name }}</span>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span class="metric-value">{{ stock.price }}</span>
+                        <span class="status-badge {% if '+' in stock.change %}status-bullish{% else %}status-bearish{% endif %}">{{ stock.change }}</span>
+                    </div>
+                </div>
+    {% endfor %}
+            </div>
+
+            <!-- AI Suggestions -->
+            <div class="card ai-suggestions">
+                <h3><i class="fas fa-robot"></i> AI Analysis & Recommendations</h3>
+                {% for suggestion in ai_suggestions %}
+                <div class="suggestion">
+                    <div class="suggestion-header">
+                        <span class="suggestion-title">{{ suggestion.title }}</span>
+                        <span class="confidence-badge">{{ suggestion.confidence }} Confidence</span>
+                    </div>
+                    <div class="suggestion-message">{{ suggestion.message }}</div>
+                </div>
+                {% endfor %}
+                {% if not ai_suggestions %}
+                <p style="color: #666; font-style: italic;">No AI suggestions available at this time</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Graphs Section -->
+        <div class="graphs-section">
+            {% if performance_image %}
+            <div class="graph-container">
+                <h3><i class="fas fa-chart-line"></i> Stock Performance</h3>
+                <img src="data:image/png;base64,{{ performance_image }}" alt="Performance Graph" class="graph-image">
+            </div>
+            {% endif %}
+
+            {% if prediction_image %}
+            <div class="graph-container">
+                <h3><i class="fas fa-crystal-ball"></i> AI Price Prediction</h3>
+                <img src="data:image/png;base64,{{ prediction_image }}" alt="Prediction Graph" class="graph-image">
+            </div>
+            {% endif %}
+        </div>
+</div>
+{% endblock %}

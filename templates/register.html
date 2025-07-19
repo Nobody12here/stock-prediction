@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Register</title>
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            color: #333333;
+        }
+
+        .register {
+            width: 600px;
+            margin: 0 auto;
+            padding: 80px;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            font-size: 36px;
+            color: #663399;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: #333333;
+            box-sizing: border-box;
+            font-size: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #663399;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .error {
+            color: #ff0000;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .success {
+            color: #00ff00;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        a {
+            color: #663399;
+        }
+    </style>
+</head>
+<body>
+    <div class="register">
+        <h2>Register</h2>
+        <form method="POST" action="{{ url_for('register') }}">
+            <input type="text" name="username" placeholder="Username" required><br><br>
+            <input type="email" name="email" placeholder="Email" required><br><br>
+            <input type="password" name="password" placeholder="Password" required><br><br>
+            <label for="is_admin">Is Admin?</label>
+            <select name="is_admin" id="is_admin">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+            <input type="submit" value="Register">
+        </form>
+        <p>Already have an account? <a href="{{ url_for('home') }}">Login here</a></p>
+
+        <!-- Displaying Flash Messages using Bootstrap Alerts -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

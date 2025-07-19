@@ -1,0 +1,431 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+    color: #22223b;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(60, 72, 88, 0.08);
+    padding: 24px;
+    margin-bottom: 24px;
+    transition: box-shadow 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 32px rgba(60, 72, 88, 0.16);
+}
+
+h1, h2, h3, h4 {
+    font-weight: 600;
+    color: #3a3a5a;
+}
+
+.btn, .btn-primary {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn:hover, .btn-primary:hover {
+    background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+    color: #fff;
+}
+
+.table {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(60, 72, 88, 0.06);
+}
+
+.table th, .table td {
+    padding: 14px 12px;
+    text-align: center;
+}
+
+input, select, textarea {
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+/* --- Contact Page Enhancements --- */
+.contact-card {
+    max-width: 480px;
+    margin: 40px auto 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(60, 72, 88, 0.16);
+    padding: 40px 32px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.contact-card h2 {
+    font-size: 2.2rem;
+    color: #667eea;
+    margin-bottom: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.contact-card p {
+    color: #555;
+    margin-bottom: 24px;
+    text-align: center;
+    font-size: 1.08rem;
+}
+.contact-card form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.contact-card .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+.contact-card label {
+    font-weight: 600;
+    color: #764ba2;
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+.contact-card input,
+.contact-card textarea {
+    border-radius: 10px;
+    border: 1.5px solid #e0e7ff;
+    padding: 12px 14px;
+    font-size: 1rem;
+    background: #f8fafc;
+    color: #22223b;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.04);
+}
+.contact-card input:focus,
+.contact-card textarea:focus {
+    border: 1.5px solid #667eea;
+    outline: none;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.10);
+}
+.contact-card .btn-primary {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 8px;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.contact-card .btn-primary:hover {
+    background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.18);
+}
+@media (max-width: 600px) {
+    .contact-card {
+        padding: 20px 8px 16px 8px;
+    }
+    .contact-card h2 {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 8px;
+    }
+    .card {
+        padding: 12px;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+} 
+
+/* --- Header/Navbar Enhancements --- */
+.navbar {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 4px 24px rgba(60, 72, 88, 0.10);
+    padding: 0.8rem 2rem;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 10;
+}
+.navbar .navbar-brand {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff !important;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(60, 72, 88, 0.10);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.navbar-nav .nav-item {
+    margin-left: 1.2rem;
+}
+.navbar-nav .nav-link {
+    color: #f8fafc !important;
+    font-weight: 500;
+    font-size: 1.08rem;
+    border-radius: 8px;
+    padding: 8px 18px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
+    background: rgba(255,255,255,0.13);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.10);
+    text-decoration: none;
+}
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.6rem 0.8rem;
+    }
+    .navbar .navbar-brand {
+        font-size: 1.3rem;
+    }
+    .navbar-nav .nav-link {
+        font-size: 1rem;
+        padding: 8px 10px;
+    }
+}
+
+/* --- Dashboard Page Enhancements --- */
+.dashboard-bg {
+    background: linear-gradient(120deg, #f8fafc 60%, #e0e7ff 100%);
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(102, 126, 234, 0.06);
+    padding: 18px 0 8px 0;
+    margin-bottom: 0;
+    min-height: 90vh;
+}
+.dashboard-bg h1 .bi-bar-chart-fill {
+    color: #764ba2;
+    margin-right: 0.3rem;
+    vertical-align: middle;
+}
+.card {
+    margin-bottom: 18px !important;
+}
+.row.g-3, .row.g-4 {
+    margin-left: 0;
+    margin-right: 0;
+}
+@media (max-width: 768px) {
+    .dashboard-bg {
+        padding: 8px 0 4px 0;
+        border-radius: 10px;
+    }
+    .dashboard-bg h1 {
+        font-size: 1.2rem;
+    }
+}
+
+/* --- Predict Page Beautiful Cards & Grid --- */
+.prediction-highlight {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(102, 126, 234, 0.13);
+    padding: 32px 24px 20px 24px;
+    margin-bottom: 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.prediction-price {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(60, 72, 88, 0.10);
+}
+.prediction-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 18px;
+}
+.prediction-stat {
+    background: #fff;
+    color: #764ba2;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+    padding: 16px 22px;
+    min-width: 120px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.prediction-stat-label {
+    font-size: 0.95rem;
+    color: #667eea;
+    font-weight: 500;
+    margin-top: 4px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+.card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(60, 72, 88, 0.10);
+    padding: 28px 22px 18px 22px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    margin-bottom: 0;
+    min-height: 220px;
+    position: relative;
+}
+.card:hover {
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.18);
+    transform: translateY(-2px) scale(1.01);
+}
+.card h3 {
+    color: #667eea;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f0f0fa;
+}
+.metric-label {
+    color: #764ba2;
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+.metric-value {
+    color: #22223b;
+    font-weight: 600;
+    font-size: 1.08rem;
+}
+.status-badge {
+    border-radius: 8px;
+    padding: 3px 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    margin-left: 6px;
+    text-transform: capitalize;
+}
+.status-bullish, .status-badge.status-bullish { background: #22c55e; }
+.status-bearish, .status-badge.status-bearish { background: #ef4444; }
+.status-neutral, .status-badge.status-neutral { background: #f59e42; }
+.status-oversold, .status-badge.status-oversold { background: #3b82f6; }
+.status-overbought, .status-badge.status-overbought { background: #a21caf; }
+.status-low { background: #22d3ee; }
+.status-medium { background: #f59e42; }
+.status-high { background: #ef4444; }
+.ai-suggestions .suggestion {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.06);
+}
+.suggestion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.suggestion-title {
+    font-weight: 600;
+    color: #764ba2;
+}
+.confidence-badge {
+    background: #667eea;
+    color: #fff;
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+.suggestion-message {
+    color: #22223b;
+    font-size: 1.05rem;
+    margin-top: 2px;
+}
+.graphs-section {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: flex-start;
+}
+.graph-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(102, 126, 234, 0.08);
+    padding: 18px 18px 10px 18px;
+    min-width: 320px;
+    flex: 1 1 320px;
+    margin-bottom: 0;
+}
+.graph-container h3 {
+    color: #667eea;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.graph-image {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(102, 126, 234, 0.10);
+    margin-top: 6px;
+}
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .graphs-section {
+        flex-direction: column;
+        gap: 16px;
+    }
+}

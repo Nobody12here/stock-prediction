@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Dashboard content (excluding header/nav) goes here -->
+<div class="dashboard-bg py-3">
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="text-primary mb-0" style="display:flex;align-items:center;gap:0.5rem;">
+        <i class="bi bi-bar-chart-fill" style="font-size:2rem;"></i>
+        Pakistan Stock Exchange Dashboard
+      </h1>
+      <button id="fetchDataBtn" class="btn btn-success">
+        <i class="bi bi-arrow-clockwise"></i> Refresh Data
+      </button>
+    </div>
+    {% if session.get('is_admin') %}
+      <div class="text-center mb-3">
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-danger">
+          <i class="bi bi-speedometer2"></i> Admin Dashboard
+        </a>
+      </div>
+    {% endif %}
+    <div class="row g-3">
+      <!-- Main Indices Column -->
+      <div class="col-lg-8">
+        <div class="card mb-3">
+          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="card-title mb-0">Top Indices</h3>
+            <span id="lastUpdated" class="last-updated">Last updated: {{ now }}</span>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-success">
+                  <tr class="text-center">
+                    <th>Symbol</th>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Close</th>
+                    <th>Volume</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="indicesTableBody">
+                  {% if top_10 %}
+                  {% for item in top_10 %}
+                  <tr>
+                    <td class="fw-bold">{{ item.get('ticker', '-') }}</td>
+                    <td class="text-center">{{ item.get('Open', '-') }}</td>
+                    <td class="text-center text-success">{{ item.get('High', '-') }}</td>
+                    <td class="text-center text-danger">{{ item.get('Low', '-') }}</td>
+                    <td class="text-center {% if item.get('Close', 0) > item.get('Open', 0) %}trend-up{% else %}trend-down{% endif %}">
+                      {{ item.get('Close', '-') }}
+                      {% if item.get('Close', 0) > item.get('Open', 0) %}
+                        <i class="bi bi-arrow-up-short"></i>
+                      {% else %}
+                        <i class="bi bi-arrow-down-short"></i>
+                      {% endif %}
+                    </td>
+                    <td class="text-center">{{ item.get('Volume', '-') }}</td>
+                    <td class="text-center">
+                      <a href="{{ url_for('predict', ticker=item.get('ticker', '')) }}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-graph-up"></i> Predict
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <tr><td colspan="7" class="text-center">No stock data available.</td></tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- All Indices Collapsible Section -->
+        <button class="btn btn-primary mt-2 w-100" data-bs-toggle="collapse" data-bs-target="#allIndices">
+          <i class="bi bi-list-ul"></i> Show All Indices <span class="badge bg-secondary ms-2">{{ all_indices|length }}</span>
+        </button>
+        <div class="collapse mt-2" id="allIndices">
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead class="table-success">
+                    <tr class="text-center">
+                      <th>Symbol</th>
+                      <th>Open</th>
+                      <th>High</th>
+                      <th>Low</th>
+                      <th>Close</th>
+                      <th>Volume</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="allIndicesTableBody">
+                    {% if all_indices %}
+                    {% for item in all_indices %}
+                    <tr>
+                      <td class="fw-bold">{{ item.get('ticker', '-') }}</td>
+                      <td class="text-center">{{ item.get('Open', '-') }}</td>
+                      <td class="text-center text-success">{{ item.get('High', '-') }}</td>
+                      <td class="text-center text-danger">{{ item.get('Low', '-') }}</td>
+                      <td class="text-center {% if item.get('Close', 0) > item.get('Open', 0) %}trend-up{% else %}trend-down{% endif %}">
+                        {{ item.get('Close', '-') }}
+                        {% if item.get('Close', 0) > item.get('Open', 0) %}
+                          <i class="bi bi-arrow-up-short"></i>
+                        {% else %}
+                          <i class="bi bi-arrow-down-short"></i>
+                        {% endif %}
+                      </td>
+                      <td class="text-center">{{ item.get('Volume', '-') }}</td>
+                      <td class="text-center">
+                        <a href="{{ url_for('predict', ticker=item.get('ticker', '')) }}" class="btn btn-primary btn-sm">
+                          <i class="bi bi-graph-up"></i> Predict
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr><td colspan="7" class="text-center">No stock data available.</td></tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- News Column -->
+      <div class="col-lg-4">
+        <div class="card h-100 mb-3">
+          <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">Latest Financial News</h3>
+          </div>
+          <div class="card-body" style="overflow-y: auto;">
+            {% for item in news %}
+            <div class="news-item">
+              <h5 class="text-primary">{{ item.title }}</h5>
+              <p class="text-muted small">{{ item.description }}</p>
+              <span class="badge {% if item.impact == 'Positive' %}bg-success{% elif item.impact == 'Negative' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+                {{ item.impact }}
+              </span>
+            </div>
+            {% if not loop.last %}<hr>{% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- News Sentiment Analysis Section -->
+    <div class="card mt-3 mb-2">
+      <div class="card-header bg-primary text-white">
+        <h3 class="card-title mb-0">News Sentiment Analysis</h3>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-primary">
+              <tr>
+                <th>News Headline</th>
+                <th class="text-center">Sentiment</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in news %}
+              <tr class="{% if item.impact == 'Positive' %}table-success{% elif item.impact == 'Negative' %}table-danger{% else %}table-warning{% endif %}">
+                <td>{{ item.title }}</td>
+                <td class="text-center fw-bold">{{ item.impact }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Dashboard BG -->
+<script>
+    $(document).ready(function() {
+      $.ajax({
+        url: '/fetch_data',
+        method: 'POST',
+        timeout: 30000,
+        contentType:'application/json',  // 30 seconds timeout
+        beforeSend: function() {
+          console.log("AJAX request started");  // Debug line
+        },
+        success: function(response) {
+          console.log("AJAX success:", response);  // Debug line
+          if (response.success) {
+            // Update tables
+            updateTable('#indicesTableBody', response.data);
+            updateTable('#allIndicesTableBody', response.data);
+            
+            // Update timestamp
+            const now = new Date();
+            $('#lastUpdated').text('Last updated: ' + now.toLocaleString());
+            
+            showToast('success', 'Data refreshed successfully!');
+          } else {
+            showToast('danger', 'Error: ' + (response.message || 'Unknown error'));
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error("AJAX error:", status, error, xhr.responseText);  // Debug line
+          showToast('danger', `Failed to fetch data (${status})`);
+        },
+        complete: function() {
+          //$('#loadingIndicator').hide();
+          console.log("AJAX request completed");  // Debug line
+        }
+      });
+      $('#fetchDataBtn').click(function() {
+        console.log("Refresh button clicked");  // Debug line
+        // $('#loadingIndicator').show();
+        
+      });
+    
+      function updateTable(selector, data) {
+        let html = '';
+        data.forEach(item => {
+          const trendClass = item['Close'] > item['Open'] ? 'trend-up' : 'trend-down';
+          const trendIcon = item['Close'] > item['Open'] ? 
+            '<i class="bi bi-arrow-up-short"></i>' : 
+            '<i class="bi bi-arrow-down-short"></i>';
+          
+          html += `
+            <tr>
+              <td class="fw-bold">${item['ticker']}</td>
+              <td class="text-center">${item['Open']}</td>
+              <td class="text-center text-success">${item['High']}</td>
+              <td class="text-center text-danger">${item['Low']}</td>
+              <td class="text-center ${trendClass}">
+                ${item['Close']} ${trendIcon}
+              </td>
+              <td class="text-center">${item['Volume']}</td>
+              <td class="text-center">
+                <a href="/predict/${item['ticker']}" class="btn btn-primary btn-sm">
+                  <i class="bi bi-graph-up"></i> Predict
+                </a>
+              </td>
+            </tr>
+          `;
+        });
+        $(selector).html(html);
+      }
+    
+      function showToast(type, message) {
+        const toastHTML = `
+          <div class="toast show align-items-center text-white bg-${type} border-0 position-fixed bottom-0 end-0 m-3" role="alert">
+            <div class="d-flex">
+              <div class="toast-body">
+                <i class="bi ${type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'} me-2"></i>
+                ${message}
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+        `;
+        
+        $('body').append(toastHTML);
+        setTimeout(() => $('.toast').remove(), 5000);
+      }
+    });
+    </script>
+{% endblock %}

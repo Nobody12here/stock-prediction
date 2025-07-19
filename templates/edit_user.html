@@ -1,0 +1,26 @@
+<!-- edit_user.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Edit User</h1>
+  
+  <form method="POST">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" name="username" id="username" value="{{ user[1] }}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" name="email" id="email" value="{{ user[2] }}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" id="password" placeholder="Enter new password (leave blank to keep current)">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+  
+{% endblock %}
