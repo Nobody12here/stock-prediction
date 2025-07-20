@@ -26,9 +26,9 @@ app = Flask(__name__)
 app.secret_key = 'prediCt0r'  # Required for flashing messages
 
 # MySQL configuration
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'  # Default user for XAMPP MySQL
-app.config['MYSQL_PASSWORD'] = ''  # Default password for XAMPP MySQL
+app.config['MYSQL_HOST'] = '38.242.137.199'
+app.config['MYSQL_USER'] = 'sammy'  # Default user for XAMPP MySQL
+app.config['MYSQL_PASSWORD'] = 'password'  # Default password for XAMPP MySQL
 app.config['MYSQL_DB'] = 'predictor_db'  # Your database name
 app.config['MYSQL_PORT'] = 3307  # XAMPP MySQL port
 
