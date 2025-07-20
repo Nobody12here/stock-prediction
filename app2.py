@@ -30,7 +30,7 @@ app.config['MYSQL_HOST'] = '38.242.137.199'
 app.config['MYSQL_USER'] = 'sammy'  # Default user for XAMPP MySQL
 app.config['MYSQL_PASSWORD'] = 'password'  # Default password for XAMPP MySQL
 app.config['MYSQL_DB'] = 'predictor_db'  # Your database name
-app.config['MYSQL_PORT'] = 3307  # XAMPP MySQL port
+app.config['MYSQL_PORT'] = 3306  # XAMPP MySQL port
 
 # Initialize MySQL
 mysql = MySQL(app)
